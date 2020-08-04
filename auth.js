@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bearerToken = require("express-bearer-token");
 const { jwtConfig } = require("./config");
-const { User } = require("./models");
+const { User } = require("./db/models");
 
 const { secret, expiresIn } = jwtConfig;
 

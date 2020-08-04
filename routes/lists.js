@@ -41,8 +41,8 @@ router.get('/:listId/notes', asyncHandler(async (req, res) => {
 
 //creates a new list
 router.post('/', requireAuth, asyncHandler(async (req, res) => {
-    const { userId, name } = req.body;
-    const list = await List.create({ userId, name });
+    const { id, title } = req.body;
+    const list = await List.create({ id, title });
     const listUsers = await ListUser.create({ userId, listId: list.dataValues.id });
     const newNote = await Note.create({ note: `I've created note-card: ${name}!`, userId, listId: list.dataValues.id });
     res.status(201).json({ list });

@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const { getUserToken, requireAuth } = require("../auth");
 
 //Imports database models
-const db = require("../models");
+const db = require("../db/models");
 const { User, ListUser } = db;
 
 const router = express.Router();
