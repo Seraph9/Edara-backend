@@ -36,7 +36,7 @@ module.exports = {
     */
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete("Lists", null, {});
     /*
       Add reverting commands here.
