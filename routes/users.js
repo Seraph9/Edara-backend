@@ -17,6 +17,11 @@ const userNotFoundError = id => {
     return err;
 };
 
+// validatePassword function
+// function validatePassword() {
+
+// };
+
 
 //Checks to see if a fullName is provided
 const validateFullName = check("fullName")
@@ -75,8 +80,10 @@ router.post("/token", validateEmailAndPassword, asyncHandler(async (req, res, ne
             email,
         },
     });
-
-    if (!user || !user.validatePassword(password)) {
+    debugger;
+    const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
+    debugger;
+    if (!user || !passwordMatch) {
         const err = new Error("Login failed");
         err.status = 401;
         err.title = "Login failed";
