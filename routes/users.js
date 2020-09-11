@@ -1,8 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
-const { getUserToken, requireAuth } = require("../auth");
+const jwt = require("jsonwebtoken");
 
+
+const { getUserToken, requireAuth } = require("../auth");
 //Imports database models
 const db = require("../db/models");
 const { User, ListUser } = db;
@@ -80,9 +82,9 @@ router.post("/token", validateEmailAndPassword, asyncHandler(async (req, res, ne
             email,
         },
     });
-    debugger;
+
     const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-    debugger;
+
     if (!user || !passwordMatch) {
         const err = new Error("Login failed");
         err.status = 401;
