@@ -62,7 +62,7 @@ router.put('/:listId', asyncHandler(async (req, res, next) => {
     }
 }));
 
-//deltes a list, checks to see if user's id matches with "owner" of list
+//deletes a list, checks to see if user's id matches with "owner" of list
 //userId get passed in from the fetch on front end via local storage
 router.delete('/:listId', asyncHandler(async (req, res, next) => {
     const { userId } = req.body; //userId should be passed into the request
