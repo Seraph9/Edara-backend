@@ -51,7 +51,7 @@ router.get('/:id(\\d+)', requireAuth, asyncHandler(async (req, res, next) => {
     } else {
         next(userNotFoundError(userId))
     }
-}))
+}));
 
 //Creates a new user and sends back a 201 status, along with the access_token
 //and user_id
