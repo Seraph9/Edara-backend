@@ -69,7 +69,7 @@ router.post(
         //await ListUser.create({ userId: user.dataValues.id, listId: 1 })
         const token = getUserToken(user);
         res.status(201).json({
-            user: { id: user.id },
+            user: { id: user.id, name: user.fullName },
             token
         });
     })
