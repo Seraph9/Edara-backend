@@ -26,9 +26,11 @@ const userNotFoundError = id => {
 
 
 //Checks to see if a fullName is provided
-const validateFullName = check("fullName")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a full-name");
+const validateFullName = [
+    check("fullName")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a full-name")
+];
 
 //Checks to see if email and password are provided
 const validateEmailAndPassword = [
@@ -64,7 +66,7 @@ router.post(
         const { fullName, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ fullName, email, hashedPassword });
-        await ListUser.create({ userId: user.dataValues.id, listId: 1 })
+        //await ListUser.create({ userId: user.dataValues.id, listId: 1 })
         const token = getUserToken(user);
         res.status(201).json({
             user: { id: user.id },

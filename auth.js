@@ -19,6 +19,7 @@ const getUserToken = user => {
         secret,
         { expiresIn: parseInt(expiresIn, 10) } // 604,800 seconds = 1 week
     );
+    console.log("token: ", token);
     return token;
 };
 
