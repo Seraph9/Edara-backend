@@ -2,22 +2,22 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const channels = await queryInterface.bulkInsert('Lists', [
+    const lists = await queryInterface.bulkInsert('Lists', [
       {
-        userId: 2,
-        title: 'Monday: Task #1:',
+        userId: 1,
+        title: 'Monday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        userId: 2,
-        title: 'Tuesday: Task #1:',
+        userId: 1,
+        title: 'Tuesday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        userId: 2,
-        title: 'Wednesday: Task #1:',
+        userId: 1,
+        title: 'Wednesday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },

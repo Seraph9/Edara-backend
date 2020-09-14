@@ -14,6 +14,7 @@ module.exports = {
     */
     const users = await queryInterface.bulkInsert('Users', [
       {
+        id: 2,
         fullName: 'Demo User',
         email: 'demo@demo.com',
         hashedPassword: bcrypt.hashSync('demo', 10),
@@ -21,6 +22,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id: 1,
         fullName: 'Abdullah Wafy',
         email: 'aw@aw.com',
         hashedPassword: bcrypt.hashSync('aw', 10),
@@ -28,6 +30,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id: 3,
         fullName: 'Wolverine',
         email: 'james@logan.com',
         hashedPassword: bcrypt.hashSync('Wolverine1$', 10),
