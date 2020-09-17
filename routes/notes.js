@@ -19,9 +19,9 @@ const userPermissionError = () => {
 
 //Creates a new note for a particular list
 router.post('/lists/:listId/notes', asyncHandler(async (req, res) => {
-    const { note, userId } = req.body;
+    const { text } = req.body;
     const listId = parseInt(req.params.listId, 10);
-    const newNote = await Note.create({ note, userId: Number(userId), listId });
+    const newNote = await Note.create({ text, userId: Number(userId), listId });
     res.status(201).json({ newNote });
 }));
 
