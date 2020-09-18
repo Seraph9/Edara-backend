@@ -16,6 +16,16 @@ const userPermissionError = () => {
     return err;
 };
 
+const validateList = [
+    check("userId")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for userId."),
+    check("title")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for title."),
+    handleValidationErrors
+];
+
 //returns all lists
 router.get('/', asyncHandler(async (req, res) => {
     const Lists = await List.findAll();
@@ -40,9 +50,10 @@ router.get('/:listId/notes', asyncHandler(async (req, res) => {
 }));
 
 //creates a new list
-router.post('/', asyncHandler(async (req, res) => {
-    const { id, userId, title } = req.body;
-    const list = await List.create({ id, userId, title });
+router.post('/', validateList, asyncHandler(async (req, res) => {
+    let { userId, title } = req.body;
+    userId = parseInt(userId, 10);
+    const list = await List.create({ userId, title });
     // const listUsers = await ListUser.create({ userId, listId: list.dataValues.id });
     // const newNote = await Note.create({ note: `I've created note-card: ${name}!`, userId, listId: list.dataValues.id });
     res.status(201).json({ list });

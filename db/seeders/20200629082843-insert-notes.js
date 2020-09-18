@@ -2,57 +2,42 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const notes = await queryInterface.bulkInsert('Notes', [
+    const lists = await queryInterface.bulkInsert('Lists', [
       {
-        note: "Learn HTML",
         userId: 1,
-        listId: 1,
+        title: 'Monday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Hello World!",
         userId: 1,
-        listId: 1,
+        title: 'Tuesday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Learn CSS",
         userId: 1,
-        listId: 2,
+        title: 'Wednesday Tasks:',
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      {
-        note: "Learn JavaScript",
-        userId: 1,
-        listId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        note: "Welcome to Edara Project Management App",
-        userId: 1,
-        listId: 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
-    ])
+    ],
+      { returning: true }
+    );
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
 
       Example:
       return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
+        title: 'John Doe',
         isBetaMember: false
       }], {});
     */
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Notes", null, {});
+    await queryInterface.bulkDelete("Lists", null, {});
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
