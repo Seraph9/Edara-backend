@@ -76,24 +76,24 @@ router.put('/:listId', asyncHandler(async (req, res, next) => {
 //deletes a list, checks to see if user's id matches with "owner" of list
 //userId get passed in from the fetch on front end via local storage
 router.delete('/:listId', asyncHandler(async (req, res, next) => {
-    const { userId } = req.body; //userId should be passed into the request
+    //const { userId } = req.body; //userId should be passed into the request
     const listId = parseInt(req.params.listId, 10);
     const list = await List.findByPk(listId);
-    const listUsers = await ListUser.findAll({ where: { listId } });
-    const notes = await Note.findAll({ where: { listId } });
-    if (list && (Number(userId) === list.dataValues.userId)) {
-        for (let note of notes) {
-            await note.destroy();
-        }
+    //const listUsers = await ListUser.findAll({ where: { listId } });
+    // const notes = await Note.findAll({ where: { listId } });
+    // if (list && (Number(userId) === list.dataValues.userId)) {
+    //     for (let note of notes) {
+    //         await note.destroy();
+    //     }
 
-        for (let listUser of listUsers) {
-            await listUser.destroy();
-        }
-        await list.destroy();
-        res.status(204).end();
-    } else {
-        next(userPermissionError());
-    }
+    //     for (let listUser of listUsers) {
+    //         await listUser.destroy();
+    //     }
+    await list.destroy();
+    res.status(204).end();
+    // } else {
+    //     next(userPermissionError());
+    //     }
 }));
 
 module.exports = router;
