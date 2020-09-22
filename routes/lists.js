@@ -62,15 +62,15 @@ router.post('/', validateList, asyncHandler(async (req, res) => {
 //updates a list name, checks to see if user's id matches with "owner" of list
 //userId get passed in from the fetch on front end via local storage
 router.put('/:listId', asyncHandler(async (req, res, next) => {
-    const { userId, name } = req.body; //userId should be passed into the request
+    const { name } = req.body; //userId should be passed into the request
     const listId = parseInt(req.params.listId, 10);
     const list = await List.findByPk(listId);
-    if (list && (Number(userId) === list.dataValues.userId)) {
-        await list.update({ name });
-        res.json({ list });
-    } else {
-        next(userPermissionError());
-    }
+    //if (list && (Number(userId) === list.dataValues.userId)) {
+    await list.update({ name });
+    res.json({ list });
+    // } else {
+    //     next(userPermissionError());
+    // }
 }));
 
 //deletes a list, checks to see if user's id matches with "owner" of list
