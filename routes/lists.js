@@ -89,6 +89,7 @@ router.delete('/:listId', asyncHandler(async (req, res, next) => {
     //     for (let listUser of listUsers) {
     //         await listUser.destroy();
     //     }
+    debugger
     await list.destroy();
     res.status(204).end();
     // } else {
