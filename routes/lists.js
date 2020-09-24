@@ -78,7 +78,9 @@ router.put('/:listId', asyncHandler(async (req, res, next) => {
 router.delete('/:listId', asyncHandler(async (req, res, next) => {
     //const { userId } = req.body; //userId should be passed into the request
     const listId = parseInt(req.params.listId, 10);
+    console.log("listId on backend delete route: ", listId);
     const list = await List.findByPk(listId);
+    console.log("list object on backend: ", list);
     //const listUsers = await ListUser.findAll({ where: { listId } });
     // const notes = await Note.findAll({ where: { listId } });
     // if (list && (Number(userId) === list.dataValues.userId)) {
@@ -89,7 +91,6 @@ router.delete('/:listId', asyncHandler(async (req, res, next) => {
     //     for (let listUser of listUsers) {
     //         await listUser.destroy();
     //     }
-    debugger
     await list.destroy();
     res.status(204).end();
     // } else {
