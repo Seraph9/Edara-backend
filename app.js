@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);
-app.use('/', notesRouter);
+app.use(notesRouter);
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
