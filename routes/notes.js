@@ -17,10 +17,11 @@ const userPermissionError = () => {
     return err;
 };
 
-// router.get('/', asyncHandler(async (req, res) => {
-//     const notes = await Note.findAll();
-//     res.json(notes);
-// }));
+// I have duplicate handler that does the same thing in lists with a different path though
+router.get('/', asyncHandler(async (req, res) => {
+    const notes = await Note.findAll();
+    res.json(notes);
+}));
 
 //Creates a new note for a particular list
 router.post('/lists/:listId/notes', asyncHandler(async (req, res) => {
