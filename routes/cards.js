@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const { getUserToken, requireAuth } = require("../auth");
 
 const db = require("../db/models");
-const { List, User, card, ListUser } = db;
+const { Card } = db;
 
 const router = express.Router();
 const { asyncHandler, handleValidationErrors } = require("../utils");
@@ -19,23 +19,23 @@ const userPermissionError = () => {
 
 // I have duplicate handler that does the same thing in lists with a different path though
 router.get('/cards', asyncHandler(async (req, res) => {
-    const cards = await card.findAll();
+    const cards = await Card.findAll();
     res.json(cards);
 }));
 
 //Creates a new card for a particular list
 router.post('/lists/:listId/cards', asyncHandler(async (req, res) => {
-    const { card, userId } = req.body; // const { card, userId } = req.body;
+    const { text } = req.body; // const { card, userId } = req.body;
     const listId = parseInt(req.params.listId, 10);
-    const newcard = await card.create({ card, userId: Number(userId), listId });
-    res.status(201).json({ newcard });
+    const card = await Card.create({ text, listId });
+    res.status(201).json({ card });
 }));
 
 //Edits a single card
 router.put('/cards/:id', asyncHandler(async (req, res, next) => {
     const { userId, card } = req.body;
     const id = parseInt(req.params.id, 10);
-    const cardToEdit = await card.findByPk(id);
+    const cardToEdit = await Card.findByPk(id);
     if (cardToEdit && (Number(userId) === cardToEdit.dataValues.userId)) {
         await cardToEdit.update({ card });
         res.json({ cardToEdit });
@@ -48,9 +48,9 @@ router.put('/cards/:id', asyncHandler(async (req, res, next) => {
 router.delete('/cards/:id', asyncHandler(async (req, res, next) => {
     const { userId } = req.body;
     const id = parseInt(req.params.id, 10);
-    const card = await card.findByPk(id);
-    if (card && (Number(userId) === card.dataValues.userId)) {
-        await card.destroy();
+    const card = await Card.findByPk(id);
+    if (card && (Number(userId) === Card.dataValues.userId)) {
+        await Card.destroy();
         res.status(204).end();
     } else {
         next(userPermissionError());

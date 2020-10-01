@@ -1,28 +1,28 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const { check } = require("express-validator");
-const { getUserToken, requireAuth } = require("../auth");
-const db = require("../db/models");
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const { check } = require('express-validator');
+const { getUserToken, requireAuth } = require('../auth');
+const db = require('../db/models');
 
-const { List, User, card } = db;
+const { List, User, Card } = db;
 
 const router = express.Router();
-const { asyncHandler, handleValidationErrors } = require("../utils");
+const { asyncHandler, handleValidationErrors } = require('../utils');
 
 const userPermissionError = () => {
     const err = Error('You do not have permission to do this');
-    err.title = "User alert.";
+    err.title = 'User alert.';
     err.status = 404;
     return err;
 };
 
 const validateList = [
-    check("userId")
+    check('userId')
         .exists({ checkFalsy: true })
-        .withMessage("Please provide a value for userId."),
-    check("title")
+        .withMessage('Please provide a value for userId.'),
+    check('title')
         .exists({ checkFalsy: true })
-        .withMessage("Please provide a value for title."),
+        .withMessage('Please provide a value for title.'),
     handleValidationErrors
 ];
 
@@ -38,11 +38,11 @@ router.get('/:listId/cards', asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.listId, 10);
     const listcards = await List.findAll({
         include: [{
-            model: card, attributes: ["card", "userId", "createdAt"],
-            include: [{ model: User, attributes: ["fullName"] }]
+            model: Card, attributes: ['card', 'listId', 'createdAt'],
+            include: [{ model: User, attributes: ['fullName'] }]
         }],
         where: { id: listId },
-        order: [[card, 'createdAt']]
+        order: [[Card, 'createdAt']]
     });
 
     const [{ cards }] = listcards;
@@ -59,7 +59,7 @@ router.post('/', validateList, asyncHandler(async (req, res) => {
     res.status(201).json({ list });
 }));
 
-//updates a list name, checks to see if user's id matches with "owner" of list
+//updates a list name, checks to see if user's id matches with 'owner' of list
 //userId get passed in from the fetch on front end via local storage
 router.put('/:listId', asyncHandler(async (req, res, next) => {
     const { title } = req.body; //userId should be passed into the request
@@ -73,14 +73,14 @@ router.put('/:listId', asyncHandler(async (req, res, next) => {
     // }
 }));
 
-//deletes a list, checks to see if user's id matches with "owner" of list
+//deletes a list, checks to see if user's id matches with 'owner' of list
 //userId get passed in from the fetch on front end via local storage
 router.delete('/:listId', asyncHandler(async (req, res, next) => {
     //const { userId } = req.body; //userId should be passed into the request
     const listId = parseInt(req.params.listId, 10);
-    console.log("listId on backend delete route: ", listId);
+    console.log('listId on backend delete route: ', listId);
     const list = await List.findByPk(listId);
-    console.log("list object on backend: ", list);
+    console.log('list object on backend: ', list);
     //const listUsers = await ListUser.findAll({ where: { listId } });
     // const cards = await card.findAll({ where: { listId } });
     // if (list && (Number(userId) === list.dataValues.userId)) {
