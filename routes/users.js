@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const { getUserToken, requireAuth } = require("../auth");
 //Imports database models
 const db = require("../db/models");
-const { User, ListUser } = db;
+const { User } = db;
 
 const router = express.Router();
 const { asyncHandler, handleValidationErrors } = require("../utils");
