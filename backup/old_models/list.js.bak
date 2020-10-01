@@ -6,14 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     title: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {});
   List.associate = function (models) {
     // associations can be defined here
     List.belongsTo(models.User, { foreignKey: 'userId' });
-    List.hasMany(models.Card, { foreignKey: 'listId' })
+    List.hasMany(models.Note, { foreignKey: 'listId' })
   };
   return List;
 };

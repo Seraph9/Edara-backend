@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const { getUserToken, requireAuth } = require("../auth");
 const db = require("../db/models");
 
-const { List, User, Note } = db;
+const { List, User, card } = db;
 
 const router = express.Router();
 const { asyncHandler, handleValidationErrors } = require("../utils");
@@ -33,20 +33,20 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-//returns all notes in a given list at listId chronologically ordered
-router.get('/:listId/notes', asyncHandler(async (req, res) => {
+//returns all cards in a given list at listId chronologically ordered
+router.get('/:listId/cards', asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.listId, 10);
-    const listNotes = await List.findAll({
+    const listcards = await List.findAll({
         include: [{
-            model: Note, attributes: ["note", "userId", "createdAt"],
+            model: card, attributes: ["card", "userId", "createdAt"],
             include: [{ model: User, attributes: ["fullName"] }]
         }],
         where: { id: listId },
-        order: [[Note, 'createdAt']]
+        order: [[card, 'createdAt']]
     });
 
-    const [{ Notes }] = listNotes;
-    res.json({ Notes });
+    const [{ cards }] = listcards;
+    res.json({ cards });
 }));
 
 //creates a new list
@@ -55,7 +55,7 @@ router.post('/', validateList, asyncHandler(async (req, res) => {
     userId = parseInt(userId, 10);
     const list = await List.create({ userId, title });
     // const listUsers = await ListUser.create({ userId, listId: list.dataValues.id });
-    // const newNote = await Note.create({ note: `I've created note-card: ${name}!`, userId, listId: list.dataValues.id });
+    // const newcard = await card.create({ card: `I've created card-card: ${name}!`, userId, listId: list.dataValues.id });
     res.status(201).json({ list });
 }));
 
@@ -82,10 +82,10 @@ router.delete('/:listId', asyncHandler(async (req, res, next) => {
     const list = await List.findByPk(listId);
     console.log("list object on backend: ", list);
     //const listUsers = await ListUser.findAll({ where: { listId } });
-    // const notes = await Note.findAll({ where: { listId } });
+    // const cards = await card.findAll({ where: { listId } });
     // if (list && (Number(userId) === list.dataValues.userId)) {
-    //     for (let note of notes) {
-    //         await note.destroy();
+    //     for (let card of cards) {
+    //         await card.destroy();
     //     }
 
     //     for (let listUser of listUsers) {

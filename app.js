@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const usersRouter = require('./routes/users');
 const listsRouter = require('./routes/lists');
-const notesRouter = require('./routes/notes');
+const cardsRouter = require('./routes/cards');
 const { environment } = require('./config');
 
 app.set('view engine', 'pug');
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);
-app.use(notesRouter);
+app.use(cardsRouter);
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {

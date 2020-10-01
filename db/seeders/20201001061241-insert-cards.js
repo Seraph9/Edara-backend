@@ -2,39 +2,34 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const notes = await queryInterface.bulkInsert('Notes', [
+    const cards = await queryInterface.bulkInsert('Cards', [
       {
-        note: "Learn HTML",
-        userId: 1,
-        listId: 1,
+        text: 'Learn HTML',
+        listId: 13, // make sure in postbird that this id matches the list's id
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Hello World!",
-        userId: 1,
-        listId: 1,
+        text: 'Hello World!',
+        listId: 13,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Learn CSS",
-        userId: 1,
-        listId: 2,
+        text: 'Learn CSS',
+        listId: 14,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Learn JavaScript",
-        userId: 1,
-        listId: 2,
+        text: 'Learn JavaScript',
+        listId: 14,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        note: "Welcome to Edara Project Management App",
-        userId: 1,
-        listId: 3,
+        text: 'Welcome to Edara Project Management App',
+        listId: 15,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -52,7 +47,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Notes", null, {});
+    await queryInterface.bulkDelete('Cards', null, {});
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
