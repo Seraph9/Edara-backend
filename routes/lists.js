@@ -36,16 +36,16 @@ router.get('/', asyncHandler(async (req, res) => {
 //returns all cards in a given list at listId chronologically ordered
 router.get('/:listId/cards', asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.listId, 10);
-    const listcards = await List.findAll({
+    const listCards = await List.findAll({
         include: [{
-            model: Card, attributes: ['card', 'listId', 'createdAt'],
-            include: [{ model: User, attributes: ['fullName'] }]
+            model: Card, attributes: ['text', 'listId', 'createdAt'],
+            //include: [{ model: User, attributes: ['fullName'] }]
         }],
         where: { id: listId },
         order: [[Card, 'createdAt']]
     });
 
-    const [{ cards }] = listcards;
+    const [{ cards }] = listCards;
     res.json({ cards });
 }));
 
