@@ -81,16 +81,11 @@ router.delete('/:listId', asyncHandler(async (req, res, next) => {
     console.log('listId on backend delete route: ', listId);
     const list = await List.findByPk(listId);
     console.log('list object on backend: ', list);
-    //const listUsers = await ListUser.findAll({ where: { listId } });
-    // const cards = await card.findAll({ where: { listId } });
+    const cards = await Card.findAll({ where: { listId } });
     // if (list && (Number(userId) === list.dataValues.userId)) {
-    //     for (let card of cards) {
-    //         await card.destroy();
-    //     }
-
-    //     for (let listUser of listUsers) {
-    //         await listUser.destroy();
-    //     }
+    for (let card of cards) {
+        await card.destroy();
+    }
     await list.destroy();
     res.status(204).end();
     // } else {
