@@ -36,17 +36,17 @@ router.get('/', asyncHandler(async (req, res) => {
 //returns all cards in a given list at listId chronologically ordered
 router.get('/:listId/cards', asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.listId, 10);
-    const listCards = await List.findAll({
+    const lists = await List.findAll({
         include: [{
             model: Card, attributes: ['text', 'listId', 'createdAt'],
             //include: [{ model: User, attributes: ['fullName'] }]
         }],
-        where: { id: listId },
+        where: { listId }, // used to be id: listId but kept getting cannot read listId of undefined in list.js on frontend
         order: [[Card, 'createdAt']]
     });
 
-    const [{ cards }] = listCards;
-    res.json({ cards });
+    const [{ cards }] = lists;
+    res.json(lists);
 }));
 
 //creates a new list
