@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
-const cors = require("cors");
+const cors = require("cors"); // connects frontend port with backend port
 
 const app = express();
 const usersRouter = require('./routes/users');
